@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DDA Line Drawing</title>
+    <style>
+        canvas {
+            border: 1px solid #000;
+            cursor: crosshair;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="400" height="400"></canvas>
+
+    <script>
+        var canvas = document.getElementById("myCanvas");
+        var context = canvas.getContext("2d");
+        var points = [];
+        var isDrawing = false;
+
+        canvas.addEventListener("mousedown", function (e) {
+            var x = e.clientX - canvas.getBoundingClientRect().left;
+            var y = e.clientY - canvas.getBoundingClientRect().top;
+
+            points.push({ x: x, y: y });
+
+            if (points.length === 2) {
+                drawLine(points[0].x, points[0].y, points[1].x, points[1].y);
+                points = [];
+            }
+        });
+
+        function drawLine(x1, y1, x2, y2) {
+            context.beginPath();
+            context.moveTo(x1, y1);
+            context.lineTo(x2, y2);
+            context.stroke();
+        }
+    </script>
+</body>
+</html>
